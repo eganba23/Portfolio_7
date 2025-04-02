@@ -5,12 +5,17 @@ Benjamin Egan
 
 # Evaluation and tips for Lab 9
 
-Here is the link to the assignment page:
-<https://datascience4psych.github.io/DataScience4Psych/lab09.html>. This
-includes the relevant information for the assignment alongside required
-questions I needed to answer.
+This assignment is a new lab, and is in the development stage. This
+piece is designed to be my commentary on the lab, providing my thoughts
+about questions, what I was confident in doing, the direction I took in
+my answers, places where I became confused, etc.
 
-#### Note - This assignment is a work in progress and my answers may reflect this
+Here is the link to the assignment:
+<https://datascience4psych.github.io/DataScience4Psych/lab09.html>. You
+use this to view the lab in it’s current form.
+
+For each question I will include the question (#Q) my answer (#A), and
+commentary (#C)
 
 ### The data
 
@@ -54,13 +59,17 @@ ncol(compas)
 
 ## Part 1 - Exploring the Data
 
-1.  Each row of the dataset represents an individual who arrested in
-    Broward County, Florida. There are 7,214 people in the dataset, and
-    53 different variables
+#### What are the dimensions of the COMPAS dataset? (Hint: Use inline R code and functions like nrow and ncol to compose your answer.) What does each row in the dataset represent? What are the variables?
 
-2.  There should be 7,214 unique people in the dataset. After a quick
-    glance through the dataset using view(), I haven’t seen a repeated
-    ID number or person’s name.
+1A. Each row of the dataset represents an individual who arrested in
+Broward County, Florida. There are 7,214 people in the dataset, and 53
+different variables
+
+2Q.
+
+2A. There should be 7,214 unique people in the dataset. After a quick
+glance through the dataset using view(), I haven’t seen a repeated ID
+number or person’s name.
 
 ### Visualizing demographic data
 

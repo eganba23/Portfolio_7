@@ -11,7 +11,7 @@ This assignment is a new lab, and is in the development stage. This piece is des
 
 Here is the link to the assignment: https://datascience4psych.github.io/DataScience4Psych/lab09.html. You use this to view the lab in it's current form.
 
-For each question I will include the question and my orignial answer 
+For each question I will include the question in bold, my answer (#A), and commentary. I include the word commentary so that you, the reader, can quickly search to get my commentary. 
 
 ```{r load-packages, message = FALSE, warning = FALSE, echo = FALSE}
 library(tidyverse)
@@ -36,13 +36,37 @@ ncol(compas)
 
 ## Part 1 - Exploring the Data
 
-Q1. What are the dimensions of the COMPAS dataset? (Hint: Use inline R code and functions like nrow and ncol to compose your answer.) What does each row in the dataset represent? What are the variables?
+#### 1. What are the dimensions of the COMPAS dataset? (Hint: Use inline R code and functions like nrow and ncol to compose your answer.) What does each row in the dataset represent? What are the variables?
 
-1. Each row of the dataset represents an individual who arrested in Broward County, Florida. There are 7,214 people in the dataset, and 53 different variables
+1A. Each row of the dataset represents an individual who arrested in Broward County, Florida. There are 7,214 people in the dataset, and 53 different variables
 
-2. There should be 7,214 unique people in the dataset. After a quick glance through the dataset using view(), I haven't seen a repeated ID number or person's name.
+#### 2. How many unique defendants are in the dataset? Is this the same as the number of rows? If not, why might there be a difference?
+
+2A. There should be 7,214 unique people in the dataset. After a quick glance through the dataset using view(), I haven't seen a repeated ID number or person's name.
 
 ### Visualizing demographic data
+
+##### 3. Let’s examine the distribution of the COMPAS risk scores (decile_score)! What do you observe about the shape of this distribution?
+
+```{r basic distribution}
+
+compas %>%
+  ggplot(aes(
+    x = decile_score
+  ))+
+  geom_histogram(stat = "count")+
+  labs(
+    x = "risk score from 1-10",
+    y = NULL,
+    title = "Distrubtion of COMPAS Scores",
+    subtitle = "higher scores mean greater risk"
+  )
+
+```
+
+3A. Skewed right, indicating there are more poeple with lower risk.
+
+#### 4. Let’s examine the demographic distribution in our dataset. Create visualizations to show by race, sex, and category
 
 #### The distribution of defendants by race
 ```{r graph race, warning = FALSE}
@@ -125,9 +149,12 @@ Age_graph
 ```
 
 
-#### Optional - Graph all on the same page
+Part 1 Commentary: So far this has been relatively basic, and nothing we haven't already done thus far.
+
+#### 4. For an extra challenge, try to create a single visualization that shows all three distributions side by side. You can use facets or color to differentiate between the different demographic groups.
 
 Here I'm using plot_grid() from the cowplot package as one example of how to do this. There are clear issues (such as size of text), but it will get the job done.
+
 ```{r all graphs together}
 library(cowplot)
 
@@ -180,7 +207,52 @@ ggplot(aes(
 
 ```
 
-The downside is that I can't change the colors of each of the graphs to what I had them.
+Chat helped me figure out how to change all the colors to reflect the original colors I used. This was a direct copy paste, with me changing the colors.
+
+```{r optional demographic with color}
+
+compas_long %>% 
+  ggplot(aes(x = Value, fill = Value)) +   
+  geom_bar(alpha = 0.7) +   
+  geom_text(     
+    stat = "count",     
+    aes(y = ..count.., label = ..count..),     
+    vjust = -0.2,     
+    size = 3   
+  ) +   
+  theme_bw() +   
+  facet_wrap(~Category, 
+             labeller = as_labeller(c(`age_cat` = "Age", 
+                                      `race` = "Race", 
+                                      `sex` = "Sex")), 
+             scales = "free_x") +  
+  labs(     
+    x = NULL,     
+    y = "Count",     
+    title = "Distribution of Defendants",     
+    subtitle = "People arrested in Broward County, Florida"   
+  ) +   
+  theme(
+    legend.position = "none",
+    axis.text.x = element_text(angle = -45, vjust = 0.5, hjust = .5)
+  ) + 
+  scale_fill_manual(
+    values = c("25 - 45" = "gray", 
+               "Greater than 45" = "gray", 
+               "Less than 25" = "gray",
+               "African-American" = "orange", 
+               "Caucasian" = "orange", 
+               "Asian" = "orange", 
+               "Hispanic" = "orange", 
+               "Native American" = "orange", 
+               "Other" = "orange",
+               "Male" = "royalblue", 
+               "Female" = "hotpink")
+  )
+
+```
+
+4 Commentary. This was certainly harder than I thought. I included my thoughts as I went along. Some of these answers (like using cowplot package) I got from googling, and others I got from ChatGPT. I think this was a cool additional exercise that made me think outside the box and I got learn about Labeller() in facet_wrap().
 
 #### Visualization of the COMPAS risk scores
 
