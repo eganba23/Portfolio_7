@@ -464,6 +464,10 @@ acc_no_commit/(acc_no_commit+not_acc_no_commit)*100
 ## Part 3 - Investigating Disparities
 
 
+#### 8. Create visualizations comparing the distribution of risk scores (decile_score) between Black and white defendants. Do you observe any differences?
+
+#### 9. Calculate the percentage of Black defendants and white defendants who were classified as high risk (decile_score >= 7). Is there a disparity?
+
 ```{r race disparity}
 
 race_graph <- compas %>%
@@ -506,13 +510,15 @@ Black_accurate/(White_accurate + Black_accurate )*100
 
 ```
 
-There's a clear difference in distribution between white and black defendants who were classified as high risk, as 78% of people who had a COMPAS score above 7 were black.
+8 & 9A. There's a clear difference in distribution between white and black defendants who were classified as high risk, as 78% of people who had a COMPAS score above 7 were black.
 
-### Q10 - Accuracy of predictions for different racial groups
+8 and 9 Commentary: I used the same method I did earlier, just filtering for race. It wasn't easy, but also assumed I did the process correct up above. Might want scaffolding here to make sure people are missing the point twice.
+
+### 10. Now, let’s look at the accuracy of predictions for different racial groups. Calculate the following metrics separately for Black defendants and white defendants:
 
 #### False Positive
 
-I'll admit I tried this 30 different ways. I turned to ChatGPT to ask for help. We went back and forth on code that didn't initially work, and I teased out what parts weren't working and what I truly needed. We settled on this code.
+10 Commentary: I'll admit I tried this 30 different ways. I turned to ChatGPT to ask for help. We went back and forth on code that didn't initially work, and I teased out what parts weren't working and what I truly needed. We settled on this code.
 ```{r false positive accuracy}
 
 non_recidivists <- race_graph %>%
@@ -610,8 +616,11 @@ error_rate_adjusted %>%
 
 ```
 
-Based on the above, we can see that Black defendants have higher false positives. This means black defendants are more likely to be non-recidivists who were classified as high risk. Although there were more false negatives (recidivists who were classified as low risk), this can be explained by the false negative proportion. There were twice as many black defendants classified as recidivists than white defendants.
+#### 11. Create a visualization comparing these metrics between Black and white defendants. What disparities do you observe?
 
+11A. Based on the above, we can see that Black defendants have higher false positives. This means black defendants are more likely to be non-recidivists who were classified as high risk. Although there were more false negatives (recidivists who were classified as low risk), this can be explained by the false negative proportion. There were twice as many black defendants classified as recidivists than white defendants.
+
+11 Commentary: I understood that questions 10 and 11 were linked. I chatted with you about this answer. I think I did this correctly, but I'll admit I didn't fully understand what I was supposed to draw from this information until our discussion. I would add in scaffolding that has them look at the numbers (both the numbers and the proportions). By doing this as I was talking with you, I then better understood the reason for looking at false positive and false negative rates and proportion.
 
 ## Part 4 - Understanding the source bias
 
