@@ -624,6 +624,8 @@ error_rate_adjusted %>%
 
 ## Part 4 - Understanding the source bias
 
+#### 12. Let’s investigate what factors might be contributing to the disparities we’ve observed. Create a visualization showing the relationship between prior convictions (priors_count) and risk score (decile_score), colored by race. Does the algorithm weigh prior convictions differently for different racial groups?
+
 ```{r prior and risk score visual, fig.height=8, fig.width=10}
 
 compas %>%
