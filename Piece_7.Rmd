@@ -640,7 +640,7 @@ compas %>%
 
 ```
 
-This is really hard to see. You can kind of tell there's more green (Caucasian) lower on the risk score and more red (African American) higher up. I filtered to only look at Caucasian and African American individuals and put them side by side. 
+12A. This is really hard to see. You can kind of tell there's more green (Caucasian) lower on the risk score and more red (African American) higher up. I filtered to only look at Caucasian and African American individuals and put them side by side. 
 
 ```{r other prior and risk score visual}
 
@@ -661,19 +661,34 @@ race_graph %>%
 
 ```
 
-Here you can tell there are way less white defendants higher up on risk scale, and that African Americans have more prior convictions. It looks like the algorithm doesn't weigh convictions differently? I'm actually not quite sure.
+12A. Here you can tell there are way less white defendants higher up on risk scale, and that African Americans have more prior convictions. It looks like the algorithm doesn't weigh convictions differently? I'm actually not quite sure.
 
-13. [I'll start by saying I didn't exactly understand the question] I think there is evidence supporting ProPublica’s claim. There is a higher amount of false positives for Black defendants compared to white defendants. Additionally, the accuracy is poor (44%), suggesting that focusing on calibration might lead to errors.
+12 Commentary: It was hard to tell what students were supposed to create here and what we were supposed to examine. It wasn't until I made the second graph that I could more clearly see the difference in distriubtion.
+
+#### 13. In 2016, ProPublica and Northpointe (the company that created COMPAS) had a disagreement about how to measure fairness. ProPublica focused on error rates (false positives and false negatives), while Northpointe focused on calibration (whether the same score means the same probability of recidivism across groups).Based on your analysis, do you see evidence supporting ProPublica’s claim that the algorithm is biased? Explain your reasoning.
+
+13A & Commentary. [I'll start by saying I didn't exactly understand the question] I think there is evidence supporting ProPublica’s claim. There is a higher amount of false positives for Black defendants compared to white defendants. Additionally, the accuracy is poor (44%), suggesting that focusing on calibration might lead to errors.
 
 ## Part 5 - Designing a more fair algorithm
 
-14. One of the first things I would look at is the the charge types. The current algorithm does not take into account the type of crimes committed. I am thinking more violent crimes would lead to a better measure of likelihood of committing another crime. I am also thinking that juvenile offenses could be a good predictor, as people with more juvenile offenses and more felonies (compared to misdemeanors) would indicate future crime.
+#### 14. If you were tasked with creating a fairer risk assessment algorithm, what changes would you make to address the disparities you’ve observed?
 
-15. A fair algorithm would probably have to weigh human bias. This could mean understanding and factoring in racism, sexism, etc. For example, black people might be more likely to have a false positive arrest (i.e. arrested while innocent). To some it might look mathematically wrong to weight black defendants differently compared to white defendants, but this might increases our accuracy.
+14A. One of the first things I would look at is the the charge types. The current algorithm does not take into account the type of crimes committed. I am thinking more violent crimes would lead to a better measure of likelihood of committing another crime. I am also thinking that juvenile offenses could be a good predictor, as people with more juvenile offenses and more felonies (compared to misdemeanors) would indicate future crime.
 
-16. Algorithms should be uses as a guide, not as a decision maker. Knowing the current accuracy of COMPAS is so low, a human needs to make the final decision as to an individual's status. Based on what I've seen, I would make it  policy that any evidence for creating policy that is supported by an algorithm need to be taken through a period of review. In this review, I would create similar analyses in this lab, and make sure that the algorithm is up to the same standard as scientific review (i.e. alpha .05 standard), ensuring that the algorithm is not due to chance.
+#### 15. Different definitions of fairness can sometimes be mathematically incompatible with each other. What trade-offs might be involved in designing a “fair” algorithm for criminal risk assessment?
+
+15A. A fair algorithm would probably have to weigh human bias. This could mean understanding and factoring in racism, sexism, etc. For example, black people might be more likely to have a false positive arrest (i.e. arrested while innocent). To some it might look mathematically wrong to weight black defendants differently compared to white defendants, but this might increases our accuracy.
+
+#### 16. Beyond technical solutions, what policy changes might be needed to ensure that algorithmic risk assessments are used fairly in the criminal justice system?
+
+16A. Algorithms should be uses as a guide, not as a decision maker. Knowing the current accuracy of COMPAS is so low, a human needs to make the final decision as to an individual's status. Based on what I've seen, I would make it  policy that any evidence for creating policy that is supported by an algorithm need to be taken through a period of review. In this review, I would create similar analyses in this lab, and make sure that the algorithm is up to the same standard as scientific review (i.e. alpha .05 standard), ensuring that the algorithm is not due to chance.
+
+
+Part 5 Commentary: I think this was very straightforward and easy to see. I think you could include an extra question that has students take a variable from question 14 and create a graph. This way, students could see if the variable was a good indicator.
 
 # Stretch Goal
+
+Stretch Goal Commentary: You told me to not attempt this.
 
 Note this will be a work in progress, as it is a stretch goal and I am still learning.
 
