@@ -14,8 +14,9 @@ Here is the link to the assignment:
 <https://datascience4psych.github.io/DataScience4Psych/lab09.html>. You
 use this to view the lab in it’s current form.
 
-For each question I will include the question (#Q) my answer (#A), and
-commentary (#C)
+For each question I will include the question in bold, my answer (#A),
+and commentary. I include the word commentary so that you, the reader,
+can quickly search to get my commentary.
 
 ### The data
 
@@ -59,19 +60,44 @@ ncol(compas)
 
 ## Part 1 - Exploring the Data
 
-#### What are the dimensions of the COMPAS dataset? (Hint: Use inline R code and functions like nrow and ncol to compose your answer.) What does each row in the dataset represent? What are the variables?
+#### 1. What are the dimensions of the COMPAS dataset? (Hint: Use inline R code and functions like nrow and ncol to compose your answer.) What does each row in the dataset represent? What are the variables?
 
 1A. Each row of the dataset represents an individual who arrested in
 Broward County, Florida. There are 7,214 people in the dataset, and 53
 different variables
 
-2Q.
+#### 2. How many unique defendants are in the dataset? Is this the same as the number of rows? If not, why might there be a difference?
 
 2A. There should be 7,214 unique people in the dataset. After a quick
 glance through the dataset using view(), I haven’t seen a repeated ID
 number or person’s name.
 
 ### Visualizing demographic data
+
+##### 3. Let’s examine the distribution of the COMPAS risk scores (decile_score)! What do you observe about the shape of this distribution?
+
+``` r
+compas %>%
+  ggplot(aes(
+    x = decile_score
+  ))+
+  geom_histogram(stat = "count")+
+  labs(
+    x = "risk score from 1-10",
+    y = NULL,
+    title = "Distrubtion of COMPAS Scores",
+    subtitle = "higher scores mean greater risk"
+  )
+```
+
+    ## Warning in geom_histogram(stat = "count"): Ignoring unknown parameters:
+    ## `binwidth`, `bins`, and `pad`
+
+![](Piece_7_files/figure-gfm/basic%20distribution-1.png)<!-- -->
+
+3A. Skewed right, indicating there are more poeple with lower risk.
+
+#### 4. Let’s examine the demographic distribution in our dataset. Create visualizations to show by race, sex, and category
 
 #### The distribution of defendants by race
 
@@ -159,7 +185,10 @@ Age_graph
 
 ![](Piece_7_files/figure-gfm/graph%20age-1.png)<!-- -->
 
-#### Optional - Graph all on the same page
+Part 1 Commentary: So far this has been relatively basic, and nothing we
+haven’t already done thus far.
+
+#### 4. For an extra challenge, try to create a single visualization that shows all three distributions side by side. You can use facets or color to differentiate between the different demographic groups.
 
 Here I’m using plot_grid() from the cowplot package as one example of
 how to do this. There are clear issues (such as size of text), but it
@@ -239,8 +268,58 @@ ggplot(aes(
 
 ![](Piece_7_files/figure-gfm/optional%20demographic%202-1.png)<!-- -->
 
-The downside is that I can’t change the colors of each of the graphs to
-what I had them.
+Chat helped me figure out how to change all the colors to reflect the
+original colors I used. This was a direct copy paste, with me changing
+the colors.
+
+``` r
+compas_long %>% 
+  ggplot(aes(x = Value, fill = Value)) +   
+  geom_bar(alpha = 0.7) +   
+  geom_text(     
+    stat = "count",     
+    aes(y = ..count.., label = ..count..),     
+    vjust = -0.2,     
+    size = 3   
+  ) +   
+  theme_bw() +   
+  facet_wrap(~Category, 
+             labeller = as_labeller(c(`age_cat` = "Age", 
+                                      `race` = "Race", 
+                                      `sex` = "Sex")), 
+             scales = "free_x") +  
+  labs(     
+    x = NULL,     
+    y = "Count",     
+    title = "Distribution of Defendants",     
+    subtitle = "People arrested in Broward County, Florida"   
+  ) +   
+  theme(
+    legend.position = "none",
+    axis.text.x = element_text(angle = -45, vjust = 0.5, hjust = .5)
+  ) + 
+  scale_fill_manual(
+    values = c("25 - 45" = "gray", 
+               "Greater than 45" = "gray", 
+               "Less than 25" = "gray",
+               "African-American" = "orange", 
+               "Caucasian" = "orange", 
+               "Asian" = "orange", 
+               "Hispanic" = "orange", 
+               "Native American" = "orange", 
+               "Other" = "orange",
+               "Male" = "royalblue", 
+               "Female" = "hotpink")
+  )
+```
+
+![](Piece_7_files/figure-gfm/optional%20demographic%20with%20color-1.png)<!-- -->
+
+4 Commentary: This was certainly harder than I thought. I included my
+thoughts as I went along. Some of these answers (like using cowplot
+package) I got from googling, and others I got from ChatGPT. I think
+this was a cool additional exercise that made me think outside the box
+and I got learn about Labeller() in facet_wrap().
 
 #### Visualization of the COMPAS risk scores
 
@@ -271,12 +350,14 @@ compas %>%
 
 ## Part 2 - Risk scores and recidivism
 
+#### 5. Create a visualization showing the relationship between risk scores (decile_score) and actual recidivism (two_year_recid). Do higher risk scores actually correspond to higher rates of recidivism?
+
 ``` r
 compas %>%
   ggplot(aes(
     x = decile_score
   ))+
-  facet_wrap(~two_year_recid)+
+  facet_wrap(~two_year_recid, labeller = as_labeller(c(`0` = "Did not recidivate within two years", `1` = "Recidivated within two years")))+
   geom_histogram()+
   theme_bw()+
    labs(
@@ -309,8 +390,15 @@ compas %>%
 
 ![](Piece_7_files/figure-gfm/risk%20score%20to%20recidivism%20visual-2.png)<!-- -->
 
-Assuming I did this correctly, it appears that recidivism, on average,
-increases COMPAS risk score.
+5A. Assuming I did this correctly, it appears that recidivism, on
+average, increases COMPAS risk score.
+
+5 Commentary: I wasn’t completely clear on what your vision for this
+question may have been. The geom_smooth() appeared to be showing the
+relationship and suggesting that people who recidivate have higher
+scores. But the histogram showed otherwise. I would recommend having
+students try both out and comment on what the two would show. Or provide
+them with the geom_smooth() and say “this might not be accurate”
 
 #### Alternate plot
 
@@ -346,6 +434,12 @@ This plot is more showing the breakdown of COMPAS scores based on
 recidivism.
 
 ### COMPAS Accuracy
+
+#### 6. Calculate the overall accuracy of the COMPAS algorithm. For this exercise, consider a prediction “correct” if:
+
+#### A defendant with a high risk score (decile_score \>= 7) did recidivate (two_year_recid = 1)
+
+#### A defendant with a low risk score (decile_score \<= 4) did not recidivate (two_year_recid = 0)
 
 ``` r
 compas_accuracy <- compas %>%
